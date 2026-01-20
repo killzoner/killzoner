@@ -1,0 +1,42 @@
+[graph]
+all-features = false
+no-default-features = false
+
+[output]
+feature-depth = 1
+
+[advisories]
+ignore = [
+  { id = "RUSTSEC-2024-0436", reason = "'paste' is unmaintained but not a security issue, transitive dep of macro_rules_attribute" },
+]
+
+[licenses]
+allow = []
+confidence-threshold = 0.8
+exceptions = []
+
+[licenses.private]
+ignore = false
+registries = []
+
+[bans]
+allow = []
+deny = []
+external-default-features = "allow"
+highlight = "all"
+multiple-versions = "warn"
+skip = []
+skip-tree = []
+wildcards = "allow"
+workspace-default-features = "allow"
+
+[sources]
+allow-git = []
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+unknown-git = "warn"
+unknown-registry = "warn"
+
+[sources.allow-org]
+bitbucket = []
+github = []
+gitlab = []

@@ -1,0 +1,56 @@
+name: security
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: "0 0 * * 0" # Weekly on Sunday
+
+jobs:
+  trivy-fs-scan:
+    runs-on: ubuntu-latest
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.workflow }}-trivy-fs-${{ github.event.pull_request.number || github.ref }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run Trivy vulnerability scanner in fs mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          trivy-config: trivy.yaml
+
+  trivy-repo-scan:
+    runs-on: ubuntu-latest
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.workflow }}-trivy-repo-${{ github.event.pull_request.number || github.ref }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run Trivy vulnerability scanner in repo mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "repo"
+          scan-ref: "."
+          trivy-config: trivy.yaml
+
+  trivy-secret-scan:
+    runs-on: ubuntu-latest
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.workflow }}-trivy-secret-${{ github.event.pull_request.number || github.ref }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run Trivy vulnerability scanner in secret mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scanners: "secret"
+          scan-ref: "."
+          trivy-config: trivy.yaml
