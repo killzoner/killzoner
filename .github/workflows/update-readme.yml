@@ -1,0 +1,28 @@
+name: update-readme
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 * *" # Monthly on the 1st
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Generate README
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cargo run -- --username killzoner --template template.md > README.md
+      - name: Create PR if changes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Update README with latest contributions"
+          title: "Update README with latest contributions"
+          body: "Automated monthly update of contributions list."
+          branch: update-readme
+          delete-branch: true

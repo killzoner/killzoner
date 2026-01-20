@@ -1,0 +1,35 @@
+[package]
+name = "github-contributions"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4", default-features = false, features = [
+  "std",
+  "derive",
+  "help",
+  "usage",
+  "error-context",
+  "env",
+] }
+reqwest = { version = "0.13", default-features = false, features = [
+  "json",
+  "rustls",
+] }
+serde = { version = "1.0", default-features = false, features = [
+  "std",
+  "derive",
+] }
+time = { version = "0.3", default-features = false, features = [
+  "std",
+  "formatting",
+] }
+tokio = { version = "1", default-features = false, features = [
+  "rt-multi-thread",
+  "macros",
+] }
+tracing = { version = "0.1", default-features = false, features = ["std"] }
+tracing-subscriber = { version = "0.3", default-features = false, features = [
+  "fmt",
+  "env-filter",
+] }
