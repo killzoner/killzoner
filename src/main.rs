@@ -2,11 +2,11 @@ mod graphql;
 
 use clap::Parser;
 use handlebars::Handlebars;
+use jiff::Zoned;
 use serde::Serialize;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
-use time::OffsetDateTime;
 use tracing::debug;
 
 // --- CLI arguments ---
@@ -78,7 +78,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
 
     // Filter out repos not pushed in the last 2 years
-    let cutoff_year = (OffsetDateTime::now_utc().year() - 2) as u16;
+    let cutoff_year = (Zoned::now().year() - 2) as u16;
 
     // Fetch contributions and active repos in parallel
     let (repos, active_repos) = tokio::try_join!(
