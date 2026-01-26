@@ -21,6 +21,7 @@ jobs:
       - name: Create PR if changes
         uses: peter-evans/create-pull-request@v8
         with:
+          token: ${{ secrets.README_UPDATE__PAT }}
           commit-message: "Update README with latest contributions"
           title: "Update README with latest contributions"
           body: "Automated monthly update of contributions list."
