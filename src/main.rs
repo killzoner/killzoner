@@ -30,6 +30,9 @@ struct Args {
         default_value = "killzoner,cubejs-prometheus"
     )]
     exclude_personal_repos: Vec<String>,
+
+    #[arg(short, long, default_value_t = 2)]
+    inactive_years_hide: i16,
 }
 
 // --- Display structs for template ---
@@ -38,6 +41,7 @@ struct Args {
 struct TemplateContext {
     active_repos: Vec<ActiveRepoDisplay>,
     contributions: Vec<ContributionDisplay>,
+    inactive_years_hide: i16,
 }
 
 #[derive(Serialize)]
@@ -78,7 +82,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
 
     // Filter out repos not pushed in the last 2 years
-    let cutoff_year = (Zoned::now().year() - 2) as u16;
+    let inactive_years_hide = args.inactive_years_hide;
+    let cutoff_year = (Zoned::now().year() - inactive_years_hide) as u16;
 
     // Fetch contributions and active repos in parallel
     let (repos, active_repos) = tokio::try_join!(
@@ -147,6 +152,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let context = TemplateContext {
         active_repos,
         contributions,
+        inactive_years_hide,
     };
 
     // Load and render template
