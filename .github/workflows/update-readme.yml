@@ -24,6 +24,6 @@ jobs:
           token: ${{ secrets.README_UPDATE__PAT }}
           commit-message: "Update README with latest contributions"
           title: "Update README with latest contributions"
-          body: "Automated monthly update of contributions list."
+          body: "Automated update of contributions list."
           branch: update-readme
           delete-branch: true
