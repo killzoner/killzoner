@@ -73,7 +73,7 @@ jobs:
         run: cargo deny -L error --workspace check bans advisories sources
 
   readme-up-to-date:
-    if: github.actor != 'dependabot[bot]'
+    if: github.actor != 'dependabot[bot]' && !contains(github.event.head_commit.author.name, 'dependabot')
     runs-on: ubuntu-latest
     concurrency:
       cancel-in-progress: true
