@@ -17,9 +17,9 @@ Current interests: async rust, query engines, observability, distributed systems
 <sup>Contributions to archived or inactive repositories for 2 years are hidden.</sup>
 
 - [apache/datafusion-ballista](https://github.com/apache/datafusion-ballista) ⭐2.0k · 8 PRs (2026)
-- [taiki-e/install-action](https://github.com/taiki-e/install-action) ⭐460 · 1 PR (2026)
-- [jamjamjon/usls](https://github.com/jamjamjon/usls) ⭐352 · 1 PR (2026)
-- [shigedangao/brioche](https://github.com/shigedangao/brioche) ⭐1 · 2 PRs (2026)
+- [taiki-e/install-action](https://github.com/taiki-e/install-action) ⭐463 · 1 PR (2026)
+- [jamjamjon/usls](https://github.com/jamjamjon/usls) ⭐362 · 1 PR (2026)
+- [shigedangao/brioche](https://github.com/shigedangao/brioche) ⭐8 · 2 PRs (2026)
 - [autometrics-dev/autometrics-rs](https://github.com/autometrics-dev/autometrics-rs) ⭐831 · 2 PRs (2025)
 - [foyer-rs/mixtrics](https://github.com/foyer-rs/mixtrics) ⭐18 · 1 PR (2025)
 - [kaikodata/kaiko-sdk-examples](https://github.com/kaikodata/kaiko-sdk-examples) ⭐14 · 83 PRs (2025)
