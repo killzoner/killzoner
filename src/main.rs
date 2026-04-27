@@ -146,7 +146,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             description: r.description,
         })
         .collect();
-    active_repos.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+    active_repos.sort_by_key(|a| a.name.to_lowercase());
 
     // Build template context
     let context = TemplateContext {
