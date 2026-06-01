@@ -10,6 +10,7 @@ Current interests: async rust, query engines, observability, distributed systems
 
 - [cargo-neat](https://github.com/killzoner/cargo-neat) - A tool to complement cargo-machete and remove unused workspace dependencies
 - [clappen](https://github.com/killzoner/clappen) - Clap flatten prefix macro
+- [duckdb-ip-extension](https://github.com/killzoner/duckdb-ip-extension) - DuckDB IP parsing extension
 - [pprof-hyper-server](https://github.com/killzoner/pprof-hyper-server) - A minimal pprof server implementation using hyper without runtime dependency
 
 ## Open Source Contributions
