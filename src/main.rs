@@ -27,9 +27,16 @@ struct Args {
     #[arg(
         long = "exclude-personal-repos",
         value_delimiter = ',',
-        default_value = "killzoner,cubejs-prometheus"
+        default_value = "killzoner"
     )]
     exclude_personal_repos: Vec<String>,
+
+    #[arg(
+        long = "include-contributions",
+        value_delimiter = ',',
+        default_value = "tomtom215/quack-rs"
+    )]
+    include_contributions: Vec<String>,
 
     #[arg(short, long, default_value_t = 2)]
     inactive_years_hide: i16,
@@ -85,9 +92,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let inactive_years_hide = args.inactive_years_hide;
     let cutoff_year = (Zoned::now().year() - inactive_years_hide) as u16;
 
-    // Fetch contributions and active repos in parallel
-    let (repos, active_repos) = tokio::try_join!(
+    // Fetch contributions, whitelisted contributions, and active repos in parallel
+    let (repos, included, active_repos) = tokio::try_join!(
         graphql::fetch_repos(&client, &args.token, &args.username, cutoff_year),
+        graphql::fetch_included_contributions(
+            &client,
+            &args.token,
+            &args.username,
+            &args.include_contributions,
+            cutoff_year
+        ),
         graphql::fetch_active_repos(
             &client,
             &args.token,
@@ -96,8 +110,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             &args.exclude_personal_repos
         )
     )?;
+
+    // Merge whitelisted contributions into the merged-PR contribution set.
+    let mut repos = repos;
+    let included_count = included.len();
+    repos.extend(included);
+
     debug!(
         contributions = repos.len(),
+        included = included_count,
         active = active_repos.len(),
         "fetched repos"
     );

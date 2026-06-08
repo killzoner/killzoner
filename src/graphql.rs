@@ -1,4 +1,4 @@
-use reqwest::header::{AUTHORIZATION, USER_AGENT};
+use reqwest::header::{ACCEPT, AUTHORIZATION, USER_AGENT};
 use serde::{Deserialize, Serialize};
 
 // --- Request types (sent to GitHub) ---
@@ -305,4 +305,112 @@ pub async fn fetch_active_repos(
         .collect();
 
     Ok(active_repos)
+}
+
+// --- Included contributions (whitelisted repos) ---
+
+#[derive(Deserialize)]
+struct CommitSearch {
+    items: Vec<CommitHit>,
+}
+
+#[derive(Deserialize)]
+struct CommitHit {
+    sha: String,
+}
+
+#[derive(Deserialize)]
+struct AssociatedPull {
+    number: u32,
+    #[serde(rename = "merged_at")]
+    merged_at: Option<String>,
+}
+
+#[derive(Deserialize)]
+struct RepoMeta {
+    #[serde(rename = "stargazers_count")]
+    stars: u32,
+    archived: bool,
+    private: bool,
+}
+
+/// Fetches contributions for whitelisted repos whose commits landed on the default
+/// branch via a merged PR (e.g. a closed PR rebased into a maintainer's release).
+pub async fn fetch_included_contributions(
+    client: &reqwest::Client,
+    token: &str,
+    username: &str,
+    repos: &[String],
+    cutoff_year: u16,
+) -> Result<Vec<RepoInfo>, reqwest::Error> {
+    let mut out = Vec::new();
+
+    for repo in repos {
+        let search: CommitSearch = client
+            .get(format!(
+                "https://api.github.com/search/commits?q=author:{username}+repo:{repo}"
+            ))
+            .header(AUTHORIZATION, format!("Bearer {token}"))
+            .header(USER_AGENT, "github-contributions-rust")
+            .header(ACCEPT, "application/vnd.github+json")
+            .send()
+            .await?
+            .json()
+            .await?;
+
+        if search.items.is_empty() {
+            continue;
+        }
+
+        let meta: RepoMeta = client
+            .get(format!("https://api.github.com/repos/{repo}"))
+            .header(AUTHORIZATION, format!("Bearer {token}"))
+            .header(USER_AGENT, "github-contributions-rust")
+            .header(ACCEPT, "application/vnd.github+json")
+            .send()
+            .await?
+            .json()
+            .await?;
+
+        if meta.private || meta.archived || meta.stars == 0 {
+            continue;
+        }
+
+        // Resolve commits to their merged PRs; dedup so squashed commits count once.
+        let mut seen_prs = std::collections::HashSet::new();
+        for hit in &search.items {
+            let pulls: Vec<AssociatedPull> = client
+                .get(format!(
+                    "https://api.github.com/repos/{repo}/commits/{}/pulls",
+                    hit.sha
+                ))
+                .header(AUTHORIZATION, format!("Bearer {token}"))
+                .header(USER_AGENT, "github-contributions-rust")
+                .header(ACCEPT, "application/vnd.github+json")
+                .send()
+                .await?
+                .json()
+                .await?;
+
+            for pull in pulls {
+                let Some(merged_at) = pull.merged_at.as_deref() else {
+                    continue;
+                };
+                if !seen_prs.insert(pull.number) {
+                    continue;
+                }
+                let year: u16 = merged_at.get(..4).and_then(|s| s.parse().ok()).unwrap_or(0);
+                if year >= cutoff_year {
+                    out.push(RepoInfo {
+                        name: repo.clone(),
+                        stars: meta.stars,
+                        year,
+                        count: 1,
+                    });
+                }
+            }
+        }
+    }
+
+    Ok(out)
 }
