@@ -13,7 +13,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-build-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
@@ -25,7 +25,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-lint-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
@@ -42,7 +42,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-fmt-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
@@ -62,7 +62,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-cargo-deny-checks-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
@@ -79,7 +79,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-readme-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Generate README
         env:
