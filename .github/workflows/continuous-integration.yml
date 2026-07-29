@@ -33,8 +33,9 @@ jobs:
       - run: cargo clippy --all --all-targets --all-features -- -D warnings
       - uses: taiki-e/install-action@v2
         with:
-          tool: cargo-machete
+          tool: cargo-machete,cargo-neat
       - run: cargo machete
+      - run: cargo neat -f
 
   fmt:
     runs-on: ubuntu-latest
@@ -50,7 +51,7 @@ jobs:
       - run: cargo fmt --all
       - uses: taiki-e/install-action@v2
         with:
-          tool: taplo-cli@0.9.3
+          tool: taplo-cli
       - name: Run taplo format
         run: taplo format
       - name: Check for a diff
