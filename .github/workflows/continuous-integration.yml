@@ -13,7 +13,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-build-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build --all --all-targets --all-features
 
@@ -23,7 +23,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-lint-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
@@ -40,7 +40,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-fmt-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
@@ -59,7 +59,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-cargo-deny-checks-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@stable
       - uses: taiki-e/install-action@v2
         with:
@@ -74,7 +74,7 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.workflow }}-readme-${{ github.event.pull_request.number || github.ref }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@stable
       - name: Generate README
         env:
