@@ -4,8 +4,6 @@ I like to write Rust.
 
 Current interests: async rust, query engines, observability, distributed systems.
 
-<sub>Personal projects or contributions are my own and not AI unless explicitely stated.<br>If you find a bug using my libraries, it's likely my mistake.</sub>
-
 ## Active Personal Projects
 
 - [cargo-neat](https://github.com/killzoner/cargo-neat) - Keep your cargo workspace neat: find unused dependencies and enforce workspace consistency
@@ -19,7 +17,7 @@ Current interests: async rust, query engines, observability, distributed systems
 
 - [apache/datafusion-ballista](https://github.com/apache/datafusion-ballista) ⭐2.1k · 12 PRs (2026)
 - [taiki-e/install-action](https://github.com/taiki-e/install-action) ⭐541 · 1 PR (2026)
-- [jamjamjon/usls](https://github.com/jamjamjon/usls) ⭐442 · 1 PR (2026)
+- [jamjamjon/usls](https://github.com/jamjamjon/usls) ⭐443 · 1 PR (2026)
 - [gdesmott/system-deps](https://github.com/gdesmott/system-deps) ⭐109 · 1 PR (2026)
 - [tomtom215/quack-rs](https://github.com/tomtom215/quack-rs) ⭐31 · 1 PR (2026)
 - [shigedangao/brioche](https://github.com/shigedangao/brioche) ⭐13 · 2 PRs (2026)
