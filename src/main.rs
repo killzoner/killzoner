@@ -2,7 +2,7 @@ mod graphql;
 
 use clap::Parser;
 use handlebars::Handlebars;
-use jiff::Zoned;
+use jiff::ZonedDateTime;
 use serde::Serialize;
 use std::collections::HashMap;
 use std::fs;
@@ -90,7 +90,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Filter out repos not pushed in the last 2 years
     let inactive_years_hide = args.inactive_years_hide;
-    let cutoff_year = (Zoned::now().year() - inactive_years_hide) as u16;
+    let cutoff_year = (ZonedDateTime::now().year() - inactive_years_hide) as u16;
 
     // Fetch contributions, whitelisted contributions, and active repos in parallel
     let (repos, included, active_repos) = tokio::try_join!(
