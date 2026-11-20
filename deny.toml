@@ -6,9 +6,8 @@ no-default-features = false
 feature-depth = 1
 
 [advisories]
-ignore = [
-  { id = "RUSTSEC-2024-0436", reason = "'paste' is unmaintained but not a security issue, transitive dep of macro_rules_attribute" },
-]
+ignore = []
+unused-ignored-advisory = "deny"
 
 [licenses]
 allow = []
