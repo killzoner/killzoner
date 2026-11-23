@@ -17,8 +17,8 @@ Current interests: async rust, query engines, observability, distributed systems
 
 - [apache/datafusion-ballista](https://github.com/apache/datafusion-ballista) ⭐2.2k · 12 PRs (2026)
 - [taiki-e/install-action](https://github.com/taiki-e/install-action) ⭐559 · 1 PR (2026)
-- [jamjamjon/usls](https://github.com/jamjamjon/usls) ⭐447 · 1 PR (2026)
-- [gdesmott/system-deps](https://github.com/gdesmott/system-deps) ⭐112 · 1 PR (2026)
+- [jamjamjon/usls](https://github.com/jamjamjon/usls) ⭐449 · 1 PR (2026)
+- [gdesmott/system-deps](https://github.com/gdesmott/system-deps) ⭐119 · 1 PR (2026)
 - [ClickHouse/terraform-provider-clickhousedbops](https://github.com/ClickHouse/terraform-provider-clickhousedbops) ⭐36 · 1 PR (2026)
 - [tomtom215/quack-rs](https://github.com/tomtom215/quack-rs) ⭐34 · 1 PR (2026)
 - [shigedangao/brioche](https://github.com/shigedangao/brioche) ⭐13 · 2 PRs (2026)
